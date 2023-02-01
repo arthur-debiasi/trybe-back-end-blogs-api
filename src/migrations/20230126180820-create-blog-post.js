@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.createTable('blog_posts', {
+    await queryInterface.createTable('blog_posts', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -27,6 +27,14 @@ module.exports = {
           model: 'users',
           key: 'id',
         },
+      },
+      published:{
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
+      updated:{
+        allowNull: false,
+        type: Sequelize.DATE,
       },
     });
   },
