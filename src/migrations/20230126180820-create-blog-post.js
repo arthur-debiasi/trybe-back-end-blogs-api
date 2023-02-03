@@ -28,11 +28,11 @@ module.exports = {
           key: 'id',
         },
       },
-      published:{
+      published: {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      updated:{
+      updated: {
         allowNull: false,
         type: Sequelize.DATE,
       },
@@ -41,6 +41,5 @@ module.exports = {
 
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('blog_posts');
-
-  }
+  },
 };
