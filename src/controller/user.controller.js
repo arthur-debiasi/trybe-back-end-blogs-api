@@ -13,7 +13,7 @@ const createUser = async (req, res) => {
   }
 };
 
-const getUsers = async (req, res) => {
+const getUsers = async (_req, res) => {
   try {
     const { type, message } = await userService.getUsers();
     return res.status(mapStatus(type)).json(message);
