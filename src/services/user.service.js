@@ -9,8 +9,16 @@ const insertUser = async ({ displayName, email, password, image }) => {
   return { type: 'CREATED', message: { token: token(email) } };
 };
 
+const getUsers = async () => {
+ const users = await User.findAll({ raw: true });
+ const safeUsers = users.map(({ password, ...user }) => user);
+  return { type: 'OK', message: safeUsers };
+};
+
 const getByUserId = async (id) => User.findByPk(id);
+
 module.exports = {
   insertUser,
   getByUserId,
+  getUsers,
 };
