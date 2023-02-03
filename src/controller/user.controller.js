@@ -24,7 +24,20 @@ const getUsers = async (req, res) => {
       .json({ message: 'Erro interno', error: err.message });
   }
 };
+
+const getUserById = async (req, res) => {
+  try {
+    const { type, message } = await userService.getUserById(req.params.id);
+    return res.status(mapStatus(type)).json(message);
+  } catch (err) {
+    console.log(err);
+    return res
+      .status(500)
+      .json({ message: 'Erro interno', error: err.message });
+  }
+};
 module.exports = {
   createUser,
   getUsers,
+  getUserById,
 };
