@@ -1,15 +1,10 @@
 const { userService } = require('../services');
-const { validateCreateUser } = require('../validations/validateBySchema');
+const { mapStatus } = require('../utils/mapStatus');
 
 const createUser = async (req, res) => {
   try {
-    const { type, message } = await validateCreateUser(req.body);
-    if (type === 201) {
-      // const { firstName, lastName, age, city, street, number } = req.body;
-      // await userService.insertUser({ firstName, lastName, age, city, street, number });
-      await userService.insertUser(req.body);
-    }
-    res.status(type).json(message);
+    const { type, message } = await userService.insertUser(req.body);
+    return res.status(mapStatus(type)).json(message);
   } catch (err) {
     console.log(err);
     return res
