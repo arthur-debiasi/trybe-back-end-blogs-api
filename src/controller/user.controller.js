@@ -3,7 +3,7 @@ const { mapStatus } = require('../utils/mapStatus');
 
 const createUser = async (req, res) => {
   try {
-    const { type, message } = await userService.insertUser(req.body);
+    const { type, message } = await userService.createUser(req.body);
     return res.status(mapStatus(type)).json(message);
   } catch (err) {
     console.log(err);

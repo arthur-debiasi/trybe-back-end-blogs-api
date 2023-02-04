@@ -12,6 +12,9 @@ const User = (sequelize, DataTypes) => {
       underscored: true,
       tableName: 'users',
       timestamps: false,
+      defaultScope: {
+        attributes: { exclude: ['password'] },
+      }
     }
   );
 

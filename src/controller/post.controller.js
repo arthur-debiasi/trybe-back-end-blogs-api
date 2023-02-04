@@ -15,6 +15,19 @@ const postPost = async (req, res) => {
   }
 };
 
+const getPosts = async (req, res) => {
+  try {
+    const { type, message } = await postService.getPosts();
+    return res.status(mapStatus(type)).json(message);
+  } catch (err) {
+    console.log(err);
+    return res
+      .status(500)
+      .json({ message: 'Erro interno', error: err.message });
+  }
+};
+
 module.exports = {
   postPost,
+  getPosts,
 };
