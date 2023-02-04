@@ -5,8 +5,8 @@ const { validateCreateUser } = require('./validation/validateCreateUser');
 const insertUser = async ({ displayName, email, password, image }) => {
   const { type, message } = await validateCreateUser({ displayName, email, password, image });
   if (type) return { type, message }; 
-  await User.create({ displayName, email, password, image });
-  return { type: 'CREATED', message: { token: token(email) } };
+  const result = await User.create({ displayName, email, password, image });
+  return { type: 'CREATED', message: { token: token({ ...result.dataValues, password }) } };
 };
 
 const getUsers = async () => {
