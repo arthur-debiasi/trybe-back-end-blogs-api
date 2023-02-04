@@ -24,18 +24,16 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       published: {
-        allowNull: false,
         type: DataTypes.DATE,
       },
       updated: {
-        allowNull: false,
         type: DataTypes.DATE,
       },
     },
     {
       underscored: true,
-      // tableName: 'categories',
-      timestamps: false,
+      createdAt: 'published',
+      updatedAt: 'updated',
     }
   );
 

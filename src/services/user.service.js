@@ -17,7 +17,6 @@ const getUsers = async () => {
 
 const getUserById = async (id) => {
   const user = await User.findByPk(id);
-  console.log(id, user);
   if (!user) return { type: 'NOT_FOUND', message: { message: 'User does not exist' } };
   return { type: 'OK', message: { ...user.dataValues, password: undefined } };
 };
