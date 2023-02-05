@@ -27,7 +27,22 @@ const getPosts = async (req, res) => {
   }
 };
 
+const getPostById = async ({ params: { id } }, res) => {
+  try {
+    const { type, message } = await postService.getPostById(id);
+    console.log(message);
+    if (!message) return res.status(mapStatus('NOT_FOUND')).json({ message: 'Post does not exist' });
+    return res.status(mapStatus(type)).json(message);
+  } catch (err) {
+    console.log(err);
+    return res
+      .status(500)
+      .json({ message: 'Erro interno', error: err.message });
+  }
+};
+
 module.exports = {
   postPost,
   getPosts,
+  getPostById,
 };

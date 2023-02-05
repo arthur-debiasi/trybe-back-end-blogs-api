@@ -5,6 +5,7 @@ const { postFields } = require('../middlewares/postFields.validate');
 
 const postRouter = express.Router();
 
+postRouter.get('/:id', tokenValidate, postController.getPostById);
 postRouter.post('/', postFields, tokenValidate, postController.postPost);
 postRouter.get('/', tokenValidate, postController.getPosts);
 

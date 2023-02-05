@@ -11,9 +11,7 @@ const createUser = async ({ displayName, email, password, image }) => {
 
 const getUsers = async () => {
  const users = await User.findAll({ raw: true });
- console.log(users);
- const safeUsers = users.map(({ password, ...user }) => user);
-  return { type: 'OK', message: safeUsers };
+  return { type: 'OK', message: users };
 };
 
 const getUserById = async (id) => {
