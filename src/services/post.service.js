@@ -27,6 +27,7 @@ const getPosts = async () => {
 const getPostById = async (id) => {
   const result = await BlogPost.findByPk(id, {
     include: [
+      { model: Category, as: 'categories', through: { attributes: [] } },
       { model: User, as: 'user' },
     ],
   });
