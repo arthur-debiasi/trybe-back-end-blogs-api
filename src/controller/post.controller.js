@@ -3,9 +3,16 @@ const { mapStatus } = require('../utils/mapStatus');
 
 const postPost = async (req, res) => {
   try {
-    const { user: { id } } = req;
+    const {
+      user: { id },
+    } = req;
     const { title, content, categoryIds } = req.body;
-    const { type, message } = await postService.postPost({ id, title, content, categoryIds });
+    const { type, message } = await postService.postPost({
+      id,
+      title,
+      content,
+      categoryIds,
+    });
     return res.status(mapStatus(type)).json(message);
   } catch (err) {
     console.log(err);
@@ -31,7 +38,11 @@ const getPostById = async ({ params: { id } }, res) => {
   try {
     const { type, message } = await postService.getPostById(id);
     console.log(message);
-    if (!message) return res.status(mapStatus('NOT_FOUND')).json({ message: 'Post does not exist' });
+    if (!message) {
+      return res
+        .status(mapStatus('NOT_FOUND'))
+        .json({ message: 'Post does not exist' });
+    }
     return res.status(mapStatus(type)).json(message);
   } catch (err) {
     console.log(err);
