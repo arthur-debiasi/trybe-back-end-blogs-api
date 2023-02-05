@@ -6,11 +6,11 @@ const { updatePostFields } = require('../middlewares/updatePostFields.validate')
 
 const postRouter = express.Router();
 
-postRouter.put('/:id', updatePostFields, tokenValidate, postController.updatePost);
 postRouter.get('/:id', tokenValidate, postController.getPostById);
-postRouter.post('/', postFields, tokenValidate, postController.postPost);
 postRouter.get('/', tokenValidate, postController.getPosts);
-
+postRouter.post('/', postFields, tokenValidate, postController.postPost);
+postRouter.put('/:id', updatePostFields, tokenValidate, postController.updatePost);
+// postRouter.delete('/id')
 module.exports = {
   postRouter,
 };
