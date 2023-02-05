@@ -52,8 +52,25 @@ const getPostById = async ({ params: { id } }, res) => {
   }
 };
 
+const updatePost = async (req, res) => {
+  try {
+    const { id: postId } = req.params;
+    const { title, content } = req.body;
+    const { id: userId } = req.user;
+    const { type, message } = await postService.updatePost({ title, content, postId, userId });
+    console.log(message);
+    return res.status(mapStatus(type)).json(message);
+  } catch (err) {
+    console.log(err);
+    return res
+      .status(500)
+      .json({ message: 'Erro interno', error: err.message });
+  }
+};
+
 module.exports = {
   postPost,
   getPosts,
   getPostById,
+  updatePost,
 };
