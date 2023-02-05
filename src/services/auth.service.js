@@ -3,7 +3,6 @@ const { token } = require('../utils/token');
 
 const auth = async ({ email, password }) => {
   const result = await User.findOne({ where: { email, password } });
-  console.log(result);
   if (!result) return { type: 'BAD_REQUEST', message: { message: 'Invalid fields' } };
   return { type: 'OK', message: { token: token(result.dataValues) } };
 };
