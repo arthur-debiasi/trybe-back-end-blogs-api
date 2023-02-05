@@ -13,7 +13,7 @@ const tokenValidate = async (req, res, next) => {
     const { email } = result;
     const user = await User.findOne({ where: { email } });
     if (!user) return res.status(401).json({ message: 'Erro ao procurar usuário do token.' });
-    req.user = { ...result, password: undefined, iat: undefined, exp: undefined };
+    req.user = result;
     next();
   } catch (err) {
     return res.status(401).json({

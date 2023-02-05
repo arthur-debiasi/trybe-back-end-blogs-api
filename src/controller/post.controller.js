@@ -18,9 +18,7 @@ const postPost = async (req, res) => {
     return res.status(mapStatus(type)).json(message);
   } catch (err) {
     console.log(err);
-    return res
-      .status(500)
-      .json({ message: internalErr, error: err.message });
+    return res.status(500).json({ message: internalErr, error: err.message });
   }
 };
 
@@ -30,9 +28,7 @@ const getPosts = async (req, res) => {
     return res.status(mapStatus(type)).json(message);
   } catch (err) {
     console.log(err);
-    return res
-      .status(500)
-      .json({ message: internalErr, error: err.message });
+    return res.status(500).json({ message: internalErr, error: err.message });
   }
 };
 
@@ -42,9 +38,7 @@ const getPostById = async ({ params: { id } }, res) => {
     return res.status(mapStatus(type)).json(message);
   } catch (err) {
     console.log(err);
-    return res
-      .status(500)
-      .json({ message: internalErr, error: err.message });
+    return res.status(500).json({ message: internalErr, error: err.message });
   }
 };
 
@@ -53,28 +47,30 @@ const updatePost = async (req, res) => {
     const { id: postId } = req.params;
     const { title, content } = req.body;
     const { id: userId } = req.user;
-    const { type, message } = await postService.updatePost({ title, content, postId, userId });
+    const { type, message } = await postService.updatePost({
+      title,
+      content,
+      postId,
+      userId,
+    });
     return res.status(mapStatus(type)).json(message);
   } catch (err) {
     console.log(err);
-    return res
-      .status(500)
-      .json({ message: internalErr, error: err.message });
+    return res.status(500).json({ message: internalErr, error: err.message });
   }
 };
 
 const deletePost = async (req, res) => {
   try {
-    const { id: postId } = req.params;
-    const { id: userId } = req.user;
+    const {
+      params: { id: postId },
+      user: { id: userId },
+    } = req;
     const { type, message } = await postService.deletePost({ postId, userId });
-    console.log(type);
     return res.status(mapStatus(type)).json(message);
   } catch (err) {
     console.log(err);
-    return res
-      .status(500)
-      .json({ message: internalErr, error: err.message });
+    return res.status(500).json({ message: internalErr, error: err.message });
   }
 };
 

@@ -36,8 +36,22 @@ const getUserById = async (req, res) => {
       .json({ message: 'Erro interno', error: err.message });
   }
 };
+
+const deleteMe = async (req, res) => {
+  try {
+    const { id } = req.user;
+    const { type, message } = await userService.deleteMe(id);
+    return res.status(mapStatus(type)).json(message);
+  } catch (err) {
+    console.log(err);
+    return res
+      .status(500)
+      .json({ message: 'Erro interno', error: err.message });
+  }
+};
 module.exports = {
   createUser,
   getUsers,
   getUserById,
+  deleteMe,
 };
