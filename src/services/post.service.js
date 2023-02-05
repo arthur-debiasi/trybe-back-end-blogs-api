@@ -1,5 +1,6 @@
 const { BlogPost, PostCategory, Category, User } = require('../models');
 const { validateCreatePost } = require('./validation/validateCreatePost');
+const { validatePostByUser } = require('./validation/validatePostByUser');
 
 const postPost = async ({ id, title, content, categoryIds }) => {
   const { type, message } = await validateCreatePost(categoryIds);
@@ -31,18 +32,13 @@ const getPostById = async (id) => {
       { model: User, as: 'user' },
     ],
   });
+  if (!result) return { type: 'NOT_FOUND', message: { message: 'Post does not exist' } };
   return { type: 'OK', message: result };
 };
 
 const updatePost = async ({ title, content, postId, userId }) => {
-  const { dataValues: postFound } = await BlogPost.findByPk(postId, {
-    include: [
-      { model: User, as: 'user' },
-    ],
-  });
-  if (postFound.user.id !== userId) {
-    return { type: 'UNAUTHORIZED', message: { message: 'Unauthorized user' } };
-  }
+  const { type, message } = await validatePostByUser({ postId, userId });
+  if (type) return { type, message };
   await BlogPost.update({ title, content }, { where: { id: postId } });
   const { dataValues: postUpdated } = await BlogPost.findByPk(postId, {
     include: [
@@ -53,9 +49,20 @@ const updatePost = async ({ title, content, postId, userId }) => {
   return { type: 'OK', message: postUpdated };
 };
 
+const deletePost = async ({ postId, userId }) => {
+  const result = await BlogPost.findByPk(postId);
+  if (!result) return { type: 'NOT_FOUND', message: { message: 'Post does not exist' } };
+  const { type, message } = await validatePostByUser({ postId, userId });
+  if (type) return { type, message };
+  console.log('vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv');
+  await BlogPost.destroy({ where: { id: postId } });
+  return { type: 'NO_CONTENT', message: '' };
+};
+
 module.exports = {
   postPost,
   getPosts,
   getPostById,
   updatePost,
+  deletePost,
 };

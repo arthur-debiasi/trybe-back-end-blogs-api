@@ -1,6 +1,8 @@
 const { postService } = require('../services');
 const { mapStatus } = require('../utils/mapStatus');
 
+const internalErr = 'Erro interno';
+
 const postPost = async (req, res) => {
   try {
     const {
@@ -18,7 +20,7 @@ const postPost = async (req, res) => {
     console.log(err);
     return res
       .status(500)
-      .json({ message: 'Erro interno', error: err.message });
+      .json({ message: internalErr, error: err.message });
   }
 };
 
@@ -30,25 +32,19 @@ const getPosts = async (req, res) => {
     console.log(err);
     return res
       .status(500)
-      .json({ message: 'Erro interno', error: err.message });
+      .json({ message: internalErr, error: err.message });
   }
 };
 
 const getPostById = async ({ params: { id } }, res) => {
   try {
     const { type, message } = await postService.getPostById(id);
-    console.log(message);
-    if (!message) {
-      return res
-        .status(mapStatus('NOT_FOUND'))
-        .json({ message: 'Post does not exist' });
-    }
     return res.status(mapStatus(type)).json(message);
   } catch (err) {
     console.log(err);
     return res
       .status(500)
-      .json({ message: 'Erro interno', error: err.message });
+      .json({ message: internalErr, error: err.message });
   }
 };
 
@@ -58,13 +54,27 @@ const updatePost = async (req, res) => {
     const { title, content } = req.body;
     const { id: userId } = req.user;
     const { type, message } = await postService.updatePost({ title, content, postId, userId });
-    console.log(message);
     return res.status(mapStatus(type)).json(message);
   } catch (err) {
     console.log(err);
     return res
       .status(500)
-      .json({ message: 'Erro interno', error: err.message });
+      .json({ message: internalErr, error: err.message });
+  }
+};
+
+const deletePost = async (req, res) => {
+  try {
+    const { id: postId } = req.params;
+    const { id: userId } = req.user;
+    const { type, message } = await postService.deletePost({ postId, userId });
+    console.log(type);
+    return res.status(mapStatus(type)).json(message);
+  } catch (err) {
+    console.log(err);
+    return res
+      .status(500)
+      .json({ message: internalErr, error: err.message });
   }
 };
 
@@ -73,4 +83,5 @@ module.exports = {
   getPosts,
   getPostById,
   updatePost,
+  deletePost,
 };

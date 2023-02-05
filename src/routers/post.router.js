@@ -10,7 +10,7 @@ postRouter.get('/:id', tokenValidate, postController.getPostById);
 postRouter.get('/', tokenValidate, postController.getPosts);
 postRouter.post('/', postFields, tokenValidate, postController.postPost);
 postRouter.put('/:id', updatePostFields, tokenValidate, postController.updatePost);
-// postRouter.delete('/id')
+postRouter.delete('/:id', tokenValidate, postController.deletePost);
 module.exports = {
   postRouter,
 };

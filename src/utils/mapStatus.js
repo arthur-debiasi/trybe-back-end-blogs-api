@@ -5,6 +5,7 @@ const statusMap = {
   CREATED: 201,
   NOT_FOUND: 404,
   UNAUTHORIZED: 401,
+  NO_CONTENT: 204,
 };
 
 const mapStatus = (type) => statusMap[type] || 500;
