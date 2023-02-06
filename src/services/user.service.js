@@ -10,10 +10,10 @@ const createUser = async ({ displayName, email, password, image }) => {
     image,
   });
   if (type) return { type, message };
-  const result = await User.create({ displayName, email, password, image });
+  const createdUser = await User.create({ displayName, email, password, image });
   return {
     type: 'CREATED',
-    message: { token: token({ ...result.dataValues, password }) },
+    message: { token: token({ ...createdUser.dataValues }) },
   };
 };
 

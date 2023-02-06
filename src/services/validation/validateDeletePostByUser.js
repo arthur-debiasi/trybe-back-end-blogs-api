@@ -1,6 +1,6 @@
 const { User, BlogPost } = require('../../models');
 
-const validatePostByUser = async ({ postId, userId }) => {
+const validateDeletePostByUser = async ({ postId, userId }) => {
   const { dataValues: postFound } = await BlogPost.findByPk(postId, {
     include: [
       { model: User, as: 'user' },
@@ -13,5 +13,5 @@ const validatePostByUser = async ({ postId, userId }) => {
 };
 
 module.exports = {
-  validatePostByUser,
+  validateDeletePostByUser,
 };
