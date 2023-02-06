@@ -1,4 +1,4 @@
-const { BlogPost, PostCategory, Category, User } = require('../models');
+const { BlogPost, PostCategory, Category, User, Sequelize } = require('../models');
 const { validateCreatePost } = require('./validation/validateCreatePost');
 const { validatePostByUser } = require('./validation/validatePostByUser');
 
@@ -59,10 +59,28 @@ const deletePost = async ({ postId, userId }) => {
   return { type: 'NO_CONTENT', message: '' };
 };
 
+const searchPost = async ({ q }) => {
+  const result = await BlogPost.findAll({
+    where: Sequelize.or({ title: {
+      [Sequelize.Op.like]: `%${q}%`,
+    } }, Sequelize.or({ content: {
+      [Sequelize.Op.like]: `%${q}%`,
+    } })),
+    include: [
+      { model: Category, as: 'categories', through: { attributes: [] } },
+      { model: User, as: 'user' },
+    ],
+  });// https://sequelize.org/docs/v6/core-concepts/model-querying-basics/#operators
+  console.log(result);
+  if (!result) return { type: 'OK', message: [] };
+  return { type: 'OK', message: result };
+};
+
 module.exports = {
   postPost,
   getPosts,
   getPostById,
   updatePost,
   deletePost,
+  searchPost,
 };

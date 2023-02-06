@@ -6,6 +6,7 @@ const { updatePostFields } = require('../middlewares/updatePostFields.validate')
 
 const postRouter = express.Router();
 
+postRouter.get('/search', tokenValidate, postController.searchPost);
 postRouter.get('/:id', tokenValidate, postController.getPostById);
 postRouter.get('/', tokenValidate, postController.getPosts);
 postRouter.post('/', postFields, tokenValidate, postController.postPost);
