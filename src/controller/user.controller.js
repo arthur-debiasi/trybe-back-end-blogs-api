@@ -1,9 +1,9 @@
 const { userService } = require('../services');
 const { mapStatus } = require('../utils/mapStatus');
 
-const createUser = async (req, res) => {
+const createUser = async ({ body }, res) => {
   try {
-    const { type, message } = await userService.createUser(req.body);
+    const { type, message } = await userService.createUser(body);
     return res.status(mapStatus(type)).json(message);
   } catch (err) {
     console.log(err);
@@ -37,9 +37,8 @@ const getUserById = async (req, res) => {
   }
 };
 
-const deleteMe = async (req, res) => {
+const deleteMe = async ({ user: { id } }, res) => {
   try {
-    const { id } = req.user;
     const { type, message } = await userService.deleteMe(id);
     return res.status(mapStatus(type)).json(message);
   } catch (err) {

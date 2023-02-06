@@ -42,11 +42,11 @@ const getPostById = async ({ params: { id } }, res) => {
   }
 };
 
-const updatePost = async (req, res) => {
+const updatePost = async (
+  { body: { title, content }, params: { id: postId }, user: { id: userId } },
+  res,
+) => {
   try {
-    const { id: postId } = req.params;
-    const { title, content } = req.body;
-    const { id: userId } = req.user;
     const { type, message } = await postService.updatePost({
       title,
       content,
@@ -60,12 +60,11 @@ const updatePost = async (req, res) => {
   }
 };
 
-const deletePost = async (req, res) => {
+const deletePost = async (
+  { params: { id: postId }, user: { id: userId } },
+  res,
+) => {
   try {
-    const {
-      params: { id: postId },
-      user: { id: userId },
-    } = req;
     const { type, message } = await postService.deletePost({ postId, userId });
     return res.status(mapStatus(type)).json(message);
   } catch (err) {
@@ -74,9 +73,8 @@ const deletePost = async (req, res) => {
   }
 };
 
-const searchPost = async (req, res) => {
+const searchPost = async ({ query: { q } }, res) => {
   try {
-    const { query: { q } } = req;
     const { type, message } = await postService.searchPost({ q });
     return res.status(mapStatus(type)).json(message);
   } catch (err) {
