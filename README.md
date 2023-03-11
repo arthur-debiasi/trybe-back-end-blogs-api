@@ -1,4 +1,4 @@
-# [Trybe](https://www.betrybe.com/) Project - Store Manager.
+# [Trybe](https://www.betrybe.com/) Project - Blogs API.
 
 ## 💻 Project
 
@@ -10,8 +10,8 @@ RESTful API for blog management made with Node.js and Sequelize.
 
 ## 📌 Skills
 
-- Develop a RESTful API from a CRUD (Create, Read, Update and Delete);
-- Develop endpoints to read and write to a MySQL database.
+-Develop a RESTful API from a CRUD (Create, Read, Update and Delete);
+-vUse Sequelize ORM to read and write to a MySQL/PostgreSQL database.
 
 ## Getting Started
 
@@ -26,18 +26,26 @@ npm install
 Initially, you need to configure a MySQL database:
 
 - Defining environment variables in an .env file;
-- Creating the database with:
+- Creating the database and tables with:
 
 ```bash
-npm run restore
+npx sequelize db:create
+npx sequelize db:migrate
 ``` 
 
-After that, the application can be started with:
+If desired, populating the tables with initial data with:
+
+```bash
+npx sequelize db:seed:all
+```
+
+The application can be started with:
 
 ```bash
 npm start
 ```
-### :heavy_check_mark: Testing the Aplication
+
+### 🧪 Testing the Aplication
 
 ```bash
 npm test
