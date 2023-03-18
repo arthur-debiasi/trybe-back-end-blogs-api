@@ -2,7 +2,7 @@
 
 ## 💻 Project
 
-RESTful API for blog management made with Node.js and Sequelize.
+This RESTful API for blog management was built with Node.js and Sequelize to provide efficient and scalable blog management functionalities.
 
 ## 🚀 Built With
 
