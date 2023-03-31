@@ -10,8 +10,8 @@ This RESTful API for blog management was built with Node.js and Sequelize to pro
 
 ## 📌 Skills
 
--Develop a RESTful API from a CRUD (Create, Read, Update and Delete);
--vUse Sequelize ORM to read and write to a MySQL/PostgreSQL database.
+- Develop a RESTful API from a CRUD (Create, Read, Update and Delete);
+- Use Sequelize ORM to read and write to a MySQL/PostgreSQL database.
 
 ## Getting Started
 
