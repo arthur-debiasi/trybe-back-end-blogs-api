@@ -45,12 +45,6 @@ The application can be started with:
 npm start
 ```
 
-### 🧪 Testing the Aplication
-
-```bash
-npm test
-```
-
 ## 💬 Contact Me
 
 <div align="left" style="display: inline_block">
